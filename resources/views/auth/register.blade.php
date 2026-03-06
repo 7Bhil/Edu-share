@@ -16,6 +16,16 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- Role -->
+        <div class="mt-4">
+            <x-input-label for="role" :value="__('Vous êtes ?')" />
+            <select id="role" name="role" class="block w-full mt-1 border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-slate-900 dark:text-slate-100 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 rounded-lg shadow-sm transition-all duration-200 py-2.5 px-3" required>
+                <option value="student" {{ old('role') == 'student' ? 'selected' : '' }}>Étudiant(e)</option>
+                <option value="teacher" {{ old('role') == 'teacher' ? 'selected' : '' }}>Enseignant(e)</option>
+            </select>
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
+        </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
