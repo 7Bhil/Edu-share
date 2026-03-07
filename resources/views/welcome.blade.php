@@ -4,145 +4,163 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>EduShare - Connect & Share</title>
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
-        <!-- Styles / Scripts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col min-h-screen selection:bg-primary-500 selection:text-white relative overflow-hidden">
-        
-        <!-- Decorative Background Elements -->
-        <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
-            <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-primary-600 to-secondary-400 opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+    <body class="antialiased bg-slate-950 text-white min-h-screen flex flex-col overflow-x-hidden" style="font-family: 'Inter', sans-serif;">
+
+        {{-- Background glow --}}
+        <div class="fixed inset-0 -z-10 pointer-events-none">
+            <div class="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[800px] h-[600px] rounded-full bg-indigo-600/10 blur-[120px]"></div>
+            <div class="absolute bottom-0 right-0 w-[500px] h-[400px] rounded-full bg-teal-500/5 blur-[100px]"></div>
         </div>
 
-        <header class="absolute inset-x-0 top-0 z-50">
-            <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-                <div class="flex lg:flex-1">
-                    <a href="/" class="-m-1.5 p-1.5 flex items-center gap-2">
-                        <x-application-logo class="w-8 h-8 text-primary-600 dark:text-primary-500" />
-                        <span class="font-bold text-xl tracking-tight text-slate-900 dark:text-white">EduShare</span>
-                    </a>
-                </div>
-                </div>
-                <div class="hidden lg:flex lg:gap-x-12">
-                    <form action="{{ route('welcome') }}" method="GET" class="relative group">
-                        <input type="text" name="search" placeholder="Rechercher un article..." value="{{ request('search') }}" class="bg-slate-100 dark:bg-slate-900/50 border-none rounded-full py-1.5 pl-10 pr-4 text-xs w-64 focus:ring-1 focus:ring-primary-500 transition-all focus:w-80 outline-none">
-                        <svg class="w-4 h-4 absolute left-3 top-2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    </form>
-                </div>
-                <div class="flex flex-1 justify-end items-center gap-4">
-                    @if (Route::has('login'))
-                        @auth
-                            <a href="{{ url('/dashboard') }}" class="text-sm font-semibold leading-6 text-slate-900 dark:text-white hover:text-primary-500 transition-colors">Dashboard <span aria-hidden="true">&rarr;</span></a>
-                        @else
-                            <a href="{{ route('login') }}" class="text-sm font-semibold leading-6 text-slate-900 dark:text-white hover:text-primary-500 transition-colors">Log in</a>
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="rounded-full bg-primary-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-all hover:scale-105">Sign up</a>
-                            @endif
-                        @endauth
-                    @endif
+        {{-- ── NAVBAR ── --}}
+        <header class="fixed inset-x-0 top-0 z-50">
+            <nav class="flex items-center justify-between px-8 py-5 max-w-screen-xl mx-auto">
+                {{-- Logo --}}
+                <a href="/" class="flex items-center gap-2">
+                    <x-application-logo class="w-7 h-7 text-indigo-500" />
+                    <span class="font-bold text-lg text-white">EduShare</span>
+                </a>
+
+                {{-- Right side --}}
+                <div class="flex items-center gap-4">
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="text-sm font-semibold text-slate-300 hover:text-white transition-colors">
+                            Dashboard <span aria-hidden="true">→</span>
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}" class="text-sm font-semibold text-slate-300 hover:text-white transition-colors">
+                            Log in
+                        </a>
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="rounded-full bg-indigo-600 hover:bg-indigo-500 px-5 py-2 text-sm font-semibold text-white transition-all hover:scale-105 shadow-lg shadow-indigo-600/20">
+                                Sign up
+                            </a>
+                        @endif
+                    @endauth
                 </div>
             </nav>
         </header>
 
-        <main class="flex-grow isolate">
-            <!-- Hero Section -->
-            <div class="px-6 pt-14 lg:px-8">
-                <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 text-center">
-                    <h1 class="text-4xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-6xl mb-6">
-                        L'excellence académique par le <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-secondary-500">Partage</span>
-                    </h1>
-                    <p class="mt-6 text-lg leading-8 text-slate-600 dark:text-slate-400">
-                        La plateforme moderne connectant étudiants et professeurs. Partagez vos ressources, publiez vos idées et collaborez dans un environnement académique de prestige.
-                    </p>
-                    <div class="mt-10 flex items-center justify-center gap-x-6">
-                        @auth
-                            <a href="{{ url('/dashboard') }}" class="rounded-full bg-primary-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 transition-all hover:scale-105">
-                                Accéder au tableau de bord
-                            </a>
-                        @else
-                            <a href="{{ route('register') }}" class="rounded-full bg-primary-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 transition-all hover:scale-105">
-                                Créer un compte gratuitement
-                            </a>
-                        @endauth
-                        <a href="#articles" class="text-sm font-semibold leading-6 text-slate-900 dark:text-white hover:text-primary-500 transition-colors">
-                            Voir les derniers articles <span aria-hidden="true">→</span>
+        <main class="flex-grow">
+
+            {{-- ── HERO ── --}}
+            <section class="flex flex-col items-center justify-center text-center px-6 pt-48 pb-32">
+                <h1 class="text-5xl sm:text-6xl font-bold tracking-tight leading-tight mb-6 max-w-2xl">
+                    Welcome to <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-teal-400">EduShare</span>
+                </h1>
+                <p class="text-slate-400 text-lg leading-relaxed max-w-xl mb-10">
+                    The modern platform connecting students and professors. Share resources, publish ideas, and collaborate in an elegant academic environment.
+                </p>
+                <div class="flex items-center gap-6">
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="rounded-full bg-indigo-600 hover:bg-indigo-500 px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-600/25 transition-all hover:scale-105">
+                            Accéder au tableau de bord
                         </a>
-                    </div>
+                    @else
+                        <a href="{{ route('register') }}" class="rounded-full bg-indigo-600 hover:bg-indigo-500 px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-600/25 transition-all hover:scale-105">
+                            Get started for free
+                        </a>
+                    @endauth
+                    <a href="#articles" class="text-sm font-semibold text-slate-300 hover:text-white transition-colors">
+                        Learn more →
+                    </a>
                 </div>
-            </div>
+            </section>
 
-            <!-- Latest Articles Section -->
-            <div id="articles" class="py-24 sm:py-32 bg-white/50 dark:bg-black/20 backdrop-blur-sm border-y border-slate-100 dark:border-slate-800">
-                <div class="mx-auto max-w-7xl px-6 lg:px-8">
-                    <div class="mx-auto max-w-2xl text-center">
-                        <h2 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">Dernières Publications</h2>
-                        <p class="mt-2 text-lg leading-8 text-slate-600 dark:text-slate-400">Découvrez les réflexions et travaux récents de notre communauté.</p>
+            {{-- ── ARTICLES ── --}}
+            <section id="articles" class="py-20 border-t border-slate-800/60">
+                <div class="max-w-7xl mx-auto px-6 lg:px-8">
+
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-white mb-2">Dernières Publications</h2>
+                        <p class="text-slate-400">Découvrez les réflexions et travaux récents de notre communauté.</p>
                     </div>
 
-                    <!-- Category Tabs -->
-                    <div class="mt-12 flex justify-center flex-wrap gap-2">
-                        <a href="{{ route('welcome', array_merge(request()->except('category'), ['category' => null])) }}" 
-                           class="px-4 py-2 rounded-full text-sm font-medium transition-all {{ !request('category') ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/30' : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800' }}">
+                    {{-- Search --}}
+                    <form action="{{ route('welcome') }}" method="GET" class="flex justify-center mb-8">
+                        <div class="relative w-full max-w-md">
+                            <input
+                                type="text"
+                                name="search"
+                                value="{{ request('search') }}"
+                                placeholder="Rechercher un article..."
+                                class="w-full bg-slate-900 border border-slate-700 text-white placeholder-slate-500 rounded-full py-2.5 pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                            >
+                            <svg class="w-4 h-4 absolute left-4 top-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        </div>
+                    </form>
+
+                    {{-- Category Tabs --}}
+                    <div class="flex justify-center flex-wrap gap-2 mb-10">
+                        <a href="{{ route('welcome', array_merge(request()->except('category'), ['category' => null])) }}"
+                           class="px-4 py-1.5 rounded-full text-sm font-medium transition-all {{ !request('category') ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white' }}">
                             Tout voir
                         </a>
                         @foreach($categories as $category)
-                            <a href="{{ route('welcome', array_merge(request()->query(), ['category' => $category->id])) }}" 
-                               class="px-4 py-2 rounded-full text-sm font-medium transition-all {{ request('category') == $category->id ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/30' : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800' }}">
+                            <a href="{{ route('welcome', array_merge(request()->query(), ['category' => $category->id])) }}"
+                               class="px-4 py-1.5 rounded-full text-sm font-medium transition-all {{ request('category') == $category->id ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white' }}">
                                 {{ $category->name }}
                             </a>
                         @endforeach
                     </div>
-                    
-                    <div class="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-12 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+
+                    {{-- Grid --}}
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         @foreach($posts as $post)
-                            <article class="flex flex-col items-start justify-between bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1 group">
-                                <div class="flex items-center gap-x-4 text-xs">
-                                    <time datetime="{{ $post->created_at->toDateString() }}" class="text-slate-500">{{ $post->created_at->translatedFormat('d M Y') }}</time>
-                                    <span class="relative z-10 rounded-full bg-primary-50 dark:bg-primary-900/30 px-3 py-1.5 font-medium text-primary-600 dark:text-primary-400">
-                                        {{ $post->category->name }}
-                                    </span>
-                                </div>
-                                <div class="group relative">
-                                    <h3 class="mt-3 text-lg font-bold leading-6 text-slate-900 dark:text-white group-hover:text-primary-600 transition-colors">
-                                        <a href="{{ route('posts.show', $post->slug) }}">
-                                            <span class="absolute inset-0"></span>
+                            <article class="group bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-indigo-500/50 hover:-translate-y-1 transition-all duration-200 hover:shadow-xl hover:shadow-indigo-500/5">
+                                <div>
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-600/15 text-indigo-400 border border-indigo-500/20">
+                                            {{ $post->category->name }}
+                                        </span>
+                                        <time class="text-xs text-slate-500">{{ $post->created_at->translatedFormat('d M Y') }}</time>
+                                    </div>
+                                    <h3 class="font-bold text-white text-base mb-3 group-hover:text-indigo-400 transition-colors leading-snug">
+                                        <a href="{{ route('posts.show', $post->slug) }}" class="stretched-link">
                                             {{ $post->title }}
                                         </a>
                                     </h3>
-                                    <p class="mt-5 line-clamp-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
+                                    <p class="text-slate-400 text-sm leading-relaxed line-clamp-3">
                                         {{ Str::limit(strip_tags($post->content), 120) }}
                                     </p>
                                 </div>
-                                <div class="relative mt-8 flex items-center gap-x-4">
-                                    <div class="h-10 w-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-primary-600">
-                                        {{ substr($post->user->name, 0, 1) }}
+                                <div class="flex items-center justify-between mt-6 pt-4 border-t border-slate-800">
+                                    <div class="flex items-center gap-2.5">
+                                        <div class="w-7 h-7 rounded-full bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-xs font-bold text-indigo-400">
+                                            {{ substr($post->user->name, 0, 1) }}
+                                        </div>
+                                        <div>
+                                            <p class="text-xs font-semibold text-white">{{ $post->user->name }}</p>
+                                            <p class="text-xs text-slate-500">{{ $post->user->role == 'teacher' ? 'Enseignant' : 'Étudiant' }}</p>
+                                        </div>
                                     </div>
-                                    <div class="text-sm leading-6">
-                                        <p class="font-bold text-slate-900 dark:text-white">
-                                            <span class="absolute inset-0"></span>
-                                            {{ $post->user->name }}
-                                        </p>
-                                        <p class="text-xs text-slate-500">{{ $post->user->role == 'teacher' ? 'Enseignant' : 'Étudiant' }}</p>
-                                    </div>
+                                    <a href="{{ route('posts.show', $post->slug) }}" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300 transition-colors">
+                                        Lire →
+                                    </a>
                                 </div>
                             </article>
                         @endforeach
                     </div>
 
                     @if($posts->isEmpty())
-                        <div class="text-center py-20">
-                            <p class="text-slate-500 italic">Aucun article n'a encore été publié.</p>
+                        <div class="text-center py-20 text-slate-500 italic">
+                            Aucun article n'a encore été publié.
                         </div>
                     @endif
+
                 </div>
-            </div>
+            </section>
+
         </main>
-        
-        <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
-            <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-secondary-400 to-primary-600 opacity-20 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-        </div>
+
+        {{-- ── FOOTER ── --}}
+        <footer class="border-t border-slate-800/60 py-8 text-center">
+            <p class="text-slate-500 text-sm">© {{ date('Y') }} EduShare. Plateforme académique universitaire.</p>
+        </footer>
+
     </body>
 </html>

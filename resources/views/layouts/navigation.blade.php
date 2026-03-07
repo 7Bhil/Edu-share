@@ -17,11 +17,13 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     
+                    @auth
                     @if(Auth::user()->role === 'admin')
                     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
                         {{ __('Administration') }}
                     </x-nav-link>
                     @endif
+                    @endauth
                 </div>
             </div>
 
@@ -105,11 +107,13 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
             
+            @auth
             @if(Auth::user()->role === 'admin')
             <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
                 {{ __('Administration') }}
             </x-responsive-nav-link>
             @endif
+            @endauth
         </div>
 
         <!-- Responsive Settings Options -->
