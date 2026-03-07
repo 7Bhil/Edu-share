@@ -48,14 +48,14 @@
         <main class="flex-grow">
 
             {{-- ── HERO ── --}}
-            <section class="flex flex-col items-center justify-center text-center px-6 pt-48 pb-32">
+            <section class="flex flex-col items-center justify-center text-center px-6 min-h-screen pt-20 pb-10">
                 <h1 class="text-5xl sm:text-6xl font-bold tracking-tight leading-tight mb-6 max-w-2xl">
                     Welcome to <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-teal-400">EduShare</span>
                 </h1>
                 <p class="text-slate-400 text-lg leading-relaxed max-w-xl mb-10">
                     The modern platform connecting students and professors. Share resources, publish ideas, and collaborate in an elegant academic environment.
                 </p>
-                <div class="flex items-center gap-6">
+                <div class="flex flex-col items-center gap-4">
                     @auth
                         <a href="{{ url('/dashboard') }}" class="rounded-full bg-indigo-600 hover:bg-indigo-500 px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-600/25 transition-all hover:scale-105">
                             Accéder au tableau de bord

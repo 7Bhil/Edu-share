@@ -5,14 +5,27 @@
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700&display=swap');
 
         :root {
-            --ink:       #f1f5f9;       /* slate-100  — texte principal */
-            --paper:     #020617;       /* slate-950  — fond global */
-            --cream:     #0f172a;       /* slate-900  — cartes / surfaces */
-            --border:    #1e293b;       /* slate-800  — bordures */
-            --muted:     #64748b;       /* slate-500  — texte secondaire */
-            --accent:    #6366f1;       /* indigo-500 — couleur principale */
-            --accent-lt: #1e1b4b;       /* indigo-950 — fond accent léger */
-            --white:     #0f172a;       /* slate-900  — "blanc" = fond carte */
+            --ink:       #0f172a;       /* slate-900 */
+            --paper:     #f8fafc;       /* slate-50 */
+            --cream:     #ffffff;       /* white */
+            --border:    #e2e8f0;       /* slate-200 */
+            --muted:     #64748b;       /* slate-500 */
+            --accent:    #6366f1;       /* indigo-500 */
+            --accent-lt: #eef2ff;       /* indigo-50 */
+            --white:     #ffffff;
+            --nav-bg:    248, 250, 252; /* slate-50 */
+        }
+
+        .dark {
+            --ink:       #f1f5f9;       /* slate-100 */
+            --paper:     #020617;       /* slate-950 */
+            --cream:     #0f172a;       /* slate-900 */
+            --border:    #1e293b;       /* slate-800 */
+            --muted:     #94a3b8;       /* slate-400 */
+            --accent:    #818cf8;       /* indigo-400 */
+            --accent-lt: #1e1b4b;       /* indigo-950 */
+            --white:     #0f172a;       /* slate-900 */
+            --nav-bg:    2, 6, 23;      /* slate-950 */
         }
 
         /* ─── RESET & BASE ─── */
@@ -30,13 +43,13 @@
             top: 0;
             z-index: 40;
             height: 56px;
-            background: rgba(2, 6, 23, 0.92);   /* slate-950 transparent */
+            background: rgba(var(--nav-bg), 0.92);
             backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 2rem;
+            padding: 0 2rem;posts/3/edit
         }
 
         .nav-left { display: flex; align-items: center; gap: 1rem; }
@@ -186,7 +199,7 @@
             font-family: 'Syne', sans-serif;
         }
 
-        .like-btn:hover { border-color: #e57373; background: #fff5f5; }
+        .like-btn:hover { border-color: #f87171; background: rgba(248, 113, 113, 0.05); }
 
         .like-btn.liked {
             border-color: var(--accent);
@@ -257,7 +270,8 @@
             font-family: 'Playfair Display', serif;
             font-size: 1.08rem;
             line-height: 1.85;
-            color: #2a2520;
+            color: var(--ink);
+            opacity: 0.9;
         }
 
         .article-content h1,
@@ -496,7 +510,8 @@
         .comment-text {
             font-size: .875rem;
             line-height: 1.65;
-            color: #3a342e;
+            color: var(--ink);
+            opacity: 0.85;
         }
 
         .comment-empty {
