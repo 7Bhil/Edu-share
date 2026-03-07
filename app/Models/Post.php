@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category; // Added this line
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
+    use SoftDeletes;
     protected $fillable = ['user_id', 'category_id', 'title', 'slug', 'content', 'status', 'image_path'];
 
     public function user()

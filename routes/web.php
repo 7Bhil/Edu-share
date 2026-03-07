@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\AdminController;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -54,6 +55,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('/users', [AdminController::class, 'users'])->name('users');
+    Route::post('/users/{user}/role', [AdminController::class, 'changeRole'])->name('users.role');
+    
+    Route::get('/posts', [AdminController::class, 'posts'])->name('posts');
+    Route::post('/posts/{post}/toggle-status', [AdminController::class, 'toggleStatus'])->name('posts.toggle-status');
 });
 
 require __DIR__.'/auth.php';
