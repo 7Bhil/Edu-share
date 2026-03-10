@@ -23,4 +23,15 @@ class CommentController extends Controller
 
         return back()->with('status', 'Commentaire ajouté !');
     }
+
+    public function destroy(Comment $comment)
+    {
+        if (auth()->id() !== $comment->user_id) {
+            abort(403, 'Action non autorisée.');
+        }
+
+        $comment->delete();
+
+        return back()->with('status', 'Commentaire supprimé.');
+    }
 }

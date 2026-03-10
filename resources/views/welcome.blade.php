@@ -129,21 +129,28 @@
                                     </p>
                                 </div>
                                 <div class="flex items-center justify-between mt-6 pt-4 border-t border-slate-800">
-                                    <div class="flex items-center gap-2.5">
-                                        <div class="w-7 h-7 rounded-full bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-xs font-bold text-indigo-400">
+                                    <a href="{{ route('users.show', $post->user->id) }}" class="flex items-center gap-2.5 group/author">
+                                        <div class="w-7 h-7 rounded-full bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-xs font-bold text-indigo-400 group-hover/author:bg-indigo-600 group-hover/author:text-white transition-all">
                                             {{ substr($post->user->name, 0, 1) }}
                                         </div>
                                         <div>
-                                            <p class="text-xs font-semibold text-white">{{ $post->user->name }}</p>
+                                            <p class="text-xs font-semibold text-white group-hover/author:text-indigo-400 transition-colors">{{ $post->user->name }}</p>
                                             <p class="text-xs text-slate-500">{{ $post->user->role == 'teacher' ? 'Enseignant' : 'Étudiant' }}</p>
                                         </div>
-                                    </div>
+                                    </a>
                                     <a href="{{ route('posts.show', $post->slug) }}" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300 transition-colors">
                                         Lire →
                                     </a>
                                 </div>
                             </article>
                         @endforeach
+                    </div>
+ 
+                    {{-- Pagination --}}
+                    <div class="mt-12 flex justify-center px-4">
+                        <div class="w-full max-w-4xl opacity-80 pagination-container">
+                            {{ $posts->links() }}
+                        </div>
                     </div>
 
                     @if($posts->isEmpty())

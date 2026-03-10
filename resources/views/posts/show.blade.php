@@ -607,13 +607,13 @@
 
             <h1 class="hero-title">{{ $post->title }}</h1>
 
-            <div class="hero-author">
-                <div class="author-avatar">{{ substr($post->user->name, 0, 1) }}</div>
+            <a href="{{ route('users.show', $post->user->id) }}" class="hero-author group/author">
+                <div class="author-avatar group-hover/author:bg-indigo-600 transition-colors">{{ substr($post->user->name, 0, 1) }}</div>
                 <div>
-                    <div class="author-name">{{ $post->user->name }}</div>
+                    <div class="author-name group-hover/author:text-indigo-400 transition-colors">{{ $post->user->name }}</div>
                     <div class="author-role">{{ $post->user->role == 'teacher' ? 'Enseignant' : 'Étudiant' }}</div>
                 </div>
-            </div>
+            </a>
         </header>
 
         {{-- ── ACTION BAR ── --}}
@@ -667,8 +667,10 @@
             <aside class="show-sidebar">
                 <div class="sidebar-section">
                     <span class="sidebar-label">Auteur</span>
-                    <div style="font-size:.82rem; font-weight:700; color:var(--ink);">{{ $post->user->name }}</div>
-                    <div style="font-family:'DM Mono',monospace; font-size:.65rem; color:var(--muted); margin-top:2px;">{{ $post->user->role == 'teacher' ? 'Enseignant' : 'Étudiant' }}</div>
+                    <a href="{{ route('users.show', $post->user->id) }}" class="group/sidebar-author">
+                        <div style="font-size:.82rem; font-weight:700; color:var(--ink);" class="group-hover/sidebar-author:text-indigo-400 transition-colors">{{ $post->user->name }}</div>
+                        <div style="font-family:'DM Mono',monospace; font-size:.65rem; color:var(--muted); margin-top:2px;">{{ $post->user->role == 'teacher' ? 'Enseignant' : 'Étudiant' }}</div>
+                    </a>
                 </div>
 
                 <div class="sidebar-line"></div>
@@ -753,7 +755,16 @@
                         <div class="comment-bubble">
                             <div class="comment-meta">
                                 <span class="comment-author">{{ $comment->user->name }}</span>
-                                <span class="comment-time">{{ $comment->created_at->diffForHumans() }}</span>
+                                <div class="flex items-center gap-3">
+                                    <span class="comment-time">{{ $comment->created_at->diffForHumans() }}</span>
+                                    @if(auth()->id() === $comment->user_id)
+                                        <form action="{{ route('comments.destroy', $comment) }}" method="POST" onsubmit="return confirm('Supprimer ce commentaire ?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-[10px] font-bold text-red-400/60 hover:text-red-400 uppercase tracking-widest transition-colors">Supprimer</button>
+                                        </form>
+                                    @endif
+                                </div>
                             </div>
                             <p class="comment-text">{{ $comment->content }}</p>
                         </div>
